@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CaptureReady — AI Photography Companion</title>
+<meta name="description" content="CaptureReady brings weather, light, gear, and technique together for photographers who plan their shots instead of hoping for them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M12 23C18.0751 23 23 18.0751 23 12C23 5.92487 18.0751 1 12 1C5.92487 1 1 5.92487 1 12C1 18.0751 5.92487 23 12 23ZM11.1662 17L13.4885 20.8706C15.9801 20.4555 18.1251 19.0162 19.4762 17H11.1662ZM6.87657 13.7379L11.2091 20.9589C8.47823 20.7209 6.09696 19.2624 4.61389 17.1319L6.87657 13.7379ZM7.63148 9H3.51936C3.18745 9.93827 3.00683 10.948 3.00683 12C3.00683 13.0929 3.20176 14.1402 3.55875 15.1091L7.63148 9ZM20.4806 15H16.3143L20.3393 8.62714C20.761 9.6687 20.9932 10.8072 20.9932 12C20.9932 13.052 20.8126 14.0617 20.4806 15ZM12.8338 7H4.52377C5.87486 4.9838 8.01991 3.54446 10.5115 3.12945L12.8338 7ZM12.7909 3.04113L17.0347 10.1141L19.2257 6.64495C17.7345 4.6361 15.4254 3.27066 12.7909 3.04113ZM8.17925 12L10.0542 9H13.9458L15.8208 12L13.9458 15H10.0542L8.17925 12Z' fill='%235c9ef6'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --navy-deep:#0a0e24;
+    --navy:#131a3d;
+    --purple:#2e2050;
+    --gold:#5c9ef6;
+    --gold-bright:#8fc2ff;
+    --amber:#598cfa;
+    --blue:#5c9ef6;
+    --cream:#f6f3ec;
+    --cream-dim:#c9c6d4;
+    --line:rgba(246,243,236,0.14);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--navy-deep);
+    color:var(--cream);
+    font-family:"Plus Jakarta Sans", sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- Atmosphere ---------- */
+  .sky{
+    position:fixed; inset:0; z-index:-2;
+    background:
+      radial-gradient(ellipse 900px 600px at 82% -8%, rgba(92,158,246,0.35), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 10% 20%, rgba(92,158,246,0.16), transparent 65%),
+      linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 45%, var(--purple) 100%);
+  }
+  .grain{
+    position:fixed; inset:0; z-index:-1; opacity:0.05; pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- Nav ---------- */
+  nav{
+    position:sticky; top:0; z-index:20;
+    backdrop-filter:blur(14px);
+    background:rgba(10,14,36,0.55);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; height:72px;}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:700; font-size:1.05rem; letter-spacing:0.01em;}
+  .brand svg{width:30px; height:30px; flex-shrink:0;}
+  nav .links{display:flex; gap:28px; font-size:0.92rem; font-weight:500;}
+  nav .links a{opacity:0.78; text-decoration:none; transition:opacity .2s;}
+  nav .links a:hover{opacity:1;}
+  @media (max-width:640px){ nav .links{display:none;} }
+
+  /* ---------- Hero ---------- */
+  header.hero{padding:108px 0 96px; position:relative;}
+  .aperture-deco{
+    position:absolute; right:-80px; top:60px; width:460px; height:460px; opacity:0.10;
+    animation:spin 90s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .kicker{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:0.78rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--gold-bright); margin-bottom:22px;
+  }
+  .kicker::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--gold-bright); box-shadow:0 0 10px var(--gold-bright);}
+  h1{
+    font-family:"Fraunces", serif;
+    font-weight:500;
+    font-size:clamp(2.6rem, 6vw, 4.6rem);
+    line-height:1.04;
+    letter-spacing:-0.01em;
+    max-width:820px;
+    margin-bottom:28px;
+  }
+  h1 em{
+    font-style:italic; font-weight:600;
+    background:linear-gradient(100deg, var(--gold-bright), var(--gold) 55%, var(--amber));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .lede{
+    font-size:1.18rem; color:var(--cream-dim); max-width:600px; margin-bottom:44px;
+    font-weight:400;
+  }
+  .cta-row{display:flex; flex-wrap:wrap; gap:16px; align-items:center;}
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:15px 28px; border-radius:100px; font-weight:700; font-size:0.98rem;
+    text-decoration:none; transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s;
+  }
+  .btn-primary{
+    background:linear-gradient(120deg, var(--gold-bright), var(--amber));
+    color:#0b1330;
+    box-shadow:0 14px 34px -12px rgba(92,158,246,0.55);
+  }
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 18px 40px -10px rgba(92,158,246,0.7);}
+  .btn-ghost{
+    border:1px solid var(--line); color:var(--cream);
+  }
+  .btn-ghost:hover{background:rgba(246,243,236,0.06);}
+
+  /* ---------- Feature grid ---------- */
+  section{padding:88px 0;}
+  .section-head{max-width:640px; margin-bottom:56px;}
+  .eyebrow{
+    font-size:0.78rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--blue); margin-bottom:14px; display:block;
+  }
+  h2{
+    font-family:"Fraunces", serif; font-weight:500; font-size:clamp(1.8rem, 3.4vw, 2.6rem);
+    line-height:1.12; letter-spacing:-0.01em;
+  }
+  .grid{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:16px;
+  }
+  .card{
+    flex:0 1 calc((100% - 32px) / 3);
+    background:rgba(19,26,61,0.72); padding:34px 28px; position:relative;
+    border:1px solid var(--line); border-radius:20px;
+    transition:background .3s, border-color .3s;
+  }
+  @media (max-width:900px){ .card{flex-basis:calc((100% - 16px) / 2);} }
+  @media (max-width:600px){ .card{flex-basis:100%;} }
+  .card:hover{background:rgba(26,34,72,0.9); border-color:rgba(92,158,246,0.4);}
+  .card .icon{
+    width:42px; height:42px; border-radius:11px; display:flex; align-items:center; justify-content:center;
+    background:rgba(92,158,246,0.14); color:var(--gold-bright); margin-bottom:20px;
+  }
+  .card .icon svg{width:22px; height:22px;}
+  .card h3{font-size:1.08rem; font-weight:700; margin-bottom:10px; font-family:"Plus Jakarta Sans", sans-serif;}
+  .card p{font-size:0.92rem; color:var(--cream-dim);}
+
+  /* ---------- Quote / stat strip ---------- */
+  .strip{
+    display:flex; flex-wrap:wrap; gap:40px; justify-content:space-between;
+    padding:44px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .stat b{
+    display:block; font-family:"Fraunces", serif; font-size:2.1rem; font-weight:600; color:var(--gold-bright);
+  }
+  .stat span{font-size:0.85rem; color:var(--cream-dim); font-weight:500;}
+
+  /* ---------- Screenshot showcase ---------- */
+  #showcase{padding-top:20px;}
+  .shot-rail{
+    display:flex; gap:24px; overflow-x:auto; padding:8px 4px 28px;
+    scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+  }
+  .shot-rail::-webkit-scrollbar{height:6px;}
+  .shot-rail::-webkit-scrollbar-thumb{background:var(--line); border-radius:3px;}
+  .shot{
+    flex:0 0 auto; width:230px; scroll-snap-align:start;
+    border-radius:26px; overflow:hidden;
+    box-shadow:0 30px 60px -24px rgba(0,0,0,0.55), 0 0 0 1px var(--line);
+    transition:transform .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .shot:hover{ transform:translateY(-6px); }
+  .shot img{display:block; width:100%; height:auto;}
+  @media (max-width:640px){
+    .shot{width:200px;}
+  }
+
+  /* ---------- FAQ / Support ---------- */
+  #support{scroll-margin-top:90px;}
+  .faq-item{
+    border-bottom:1px solid var(--line); padding:26px 0;
+  }
+  .faq-item h3{font-size:1.06rem; font-weight:700; margin-bottom:10px;}
+  .faq-item p{color:var(--cream-dim); font-size:0.96rem; max-width:680px;}
+  .support-card{
+    margin-top:52px; padding:40px; border-radius:20px;
+    background:linear-gradient(120deg, rgba(92,158,246,0.14), rgba(92,158,246,0.10));
+    border:1px solid var(--line);
+    display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:24px;
+  }
+  .support-card h3{font-family:"Fraunces", serif; font-weight:500; font-size:1.5rem; margin-bottom:8px;}
+  .support-card p{color:var(--cream-dim); font-size:0.95rem;}
+
+  footer{
+    padding:48px 0 64px; border-top:1px solid var(--line);
+    display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; align-items:center;
+    font-size:0.86rem; color:var(--cream-dim);
+  }
+  footer a{text-decoration:underline; text-underline-offset:3px; opacity:0.85;}
+  footer a:hover{opacity:1;}
+
+  ::selection{background:var(--gold-bright); color:#0b1330;}
+</style>
+</head>
+<body>
+
+<div class="sky"></div>
+<div class="grain"></div>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 23C18.0751 23 23 18.0751 23 12C23 5.92487 18.0751 1 12 1C5.92487 1 1 5.92487 1 12C1 18.0751 5.92487 23 12 23ZM11.1662 17L13.4885 20.8706C15.9801 20.4555 18.1251 19.0162 19.4762 17H11.1662ZM6.87657 13.7379L11.2091 20.9589C8.47823 20.7209 6.09696 19.2624 4.61389 17.1319L6.87657 13.7379ZM7.63148 9H3.51936C3.18745 9.93827 3.00683 10.948 3.00683 12C3.00683 13.0929 3.20176 14.1402 3.55875 15.1091L7.63148 9ZM20.4806 15H16.3143L20.3393 8.62714C20.761 9.6687 20.9932 10.8072 20.9932 12C20.9932 13.052 20.8126 14.0617 20.4806 15ZM12.8338 7H4.52377C5.87486 4.9838 8.01991 3.54446 10.5115 3.12945L12.8338 7ZM12.7909 3.04113L17.0347 10.1141L19.2257 6.64495C17.7345 4.6361 15.4254 3.27066 12.7909 3.04113ZM8.17925 12L10.0542 9H13.9458L15.8208 12L13.9458 15H10.0542L8.17925 12Z" fill="#5c9ef6"/></svg>
+      CaptureReady
+    </div>
+    <div class="links">
+      <a href="#features">Features</a>
+      <a href="#support">Support</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <svg class="aperture-deco" viewBox="0 0 200 200" fill="none">
+      <g stroke="#5c9ef6" stroke-width="1.5">
+        <polygon points="100,10 174,50 174,150 100,190 26,150 26,50" fill="none"/>
+        <line x1="100" y1="100" x2="100" y2="10"/>
+        <line x1="100" y1="100" x2="174" y2="50"/>
+        <line x1="100" y1="100" x2="174" y2="150"/>
+        <line x1="100" y1="100" x2="100" y2="190"/>
+        <line x1="100" y1="100" x2="26" y2="150"/>
+        <line x1="100" y1="100" x2="26" y2="50"/>
+      </g>
+    </svg>
+    <div class="kicker">AI Photography Companion</div>
+    <h1>Know the light<br><em>before</em> you shoot it.</h1>
+    <p class="lede">CaptureReady brings weather, golden hour, exposure, gear, and technique together in one beautifully designed app — for photographers who plan their shots instead of hoping for them.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#support">Get Support</a>
+      <a class="btn btn-ghost" href="#features">See Features</a>
+    </div>
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">What's Inside</span>
+      <h2>Everything a photographer plans a shoot around, in one place.</h2>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg></div>
+        <h3>Dashboard</h3>
+        <p>Sunrise, sunset, golden hour, blue hour, moon phase, live weather, and a Photography Conditions Score — all at a glance.</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>Exposure Triangle</h3>
+        <p>Drag ISO, aperture, and shutter speed and watch the tradeoffs happen live, with plain-English explanations.</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l-6-3V4l6 3 6-3 6 3v11l-6-3-6 3z"/><path d="M9 7v11M15 4v11"/></svg></div>
+        <h3>Photography Map</h3>
+        <p>Color-coded pins for wildlife, sunset, waterfall, and astro spots — with best times, gear, and ratings saved.</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="15" height="12" rx="2"/><path d="M17 10l5-3v10l-5-3"/></svg></div>
+        <h3>Gear &amp; Journal</h3>
+        <p>Track every camera, lens, and accessory you own, and log each shoot with notes, favorite settings, and lessons learned.</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div>
+        <h3>Learning Center</h3>
+        <p>Exposure, ISO, aperture, stops, depth of field, and more — taught through interactive animations, not walls of text.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="strip">
+      <div class="stat"><b>9</b><span>Interactive lessons</span></div>
+      <div class="stat"><b>∞</b><span>Presets &amp; gear saved</span></div>
+      <div class="stat"><b>4</b><span>Light alerts you control</span></div>
+      <div class="stat"><b>1</b><span>App for the whole shoot</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="showcase">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">See It In Action</span>
+      <h2>Every screen built around the light.</h2>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="shot-rail">
+      <div class="shot"><img src="screenshots/4-dashboard.png" alt="CaptureReady Dashboard showing live weather, golden hour and blue hour"></div>
+      <div class="shot"><img src="screenshots/2-exposure-triangle.png" alt="CaptureReady Exposure Triangle screen"></div>
+      <div class="shot"><img src="screenshots/3-exposure-calculator.png" alt="CaptureReady Exposure Calculator screen"></div>
+      <div class="shot"><img src="screenshots/5-map.png" alt="CaptureReady Photography Map with saved locations"></div>
+      <div class="shot"><img src="screenshots/1-learning-center.png" alt="CaptureReady Learning Center screen"></div>
+    </div>
+  </div>
+</section>
+
+<section id="support">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Support</span>
+      <h2>Questions? We're here to help.</h2>
+    </div>
+
+    <div class="faq-item">
+      <h3>Why does my weather data say "Estimated"?</h3>
+      <p>CaptureReady uses Apple WeatherKit for live weather. If WeatherKit is briefly unavailable (no connection, or a temporary outage), CaptureReady automatically falls back to a free alternate weather source, and only shows placeholder estimates as a last resort when neither is reachable. Pull down to refresh once you're back online.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Why does it take a moment to find my location?</h3>
+      <p>A first location fix can take a few seconds to around 15–20 seconds, especially indoors where your device has to fall back from GPS to Wi‑Fi based positioning. This is normal iOS behavior. If it can't get a fix within 15 seconds, CaptureReady lets you tap to retry, or search for a location manually instead.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Where is my data stored?</h3>
+      <p>Everything you save in CaptureReady — shoots, gear, presets, journal entries, and pinned locations — is stored privately on your device. It isn't uploaded to any server we operate. See our <a href="privacy.html">Privacy Policy</a> for full details.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Why does the Exposure Calculator limit my ISO or aperture range?</h3>
+      <p>If you've marked a camera or lens as "active" in Gear, CaptureReady limits the Exposure Triangle and Calculator to what that specific gear actually supports. Turn off the active toggle on that item (or don't mark any gear active) to use the full standard range instead.</p>
+    </div>
+
+    <div class="support-card">
+      <div>
+        <h3>Still need help?</h3>
+        <p>Email us and we'll get back to you as soon as we can.</p>
+      </div>
+      <a class="btn btn-primary" href="mailto:berlintyler11@gmail.com">berlintyler11@gmail.com</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; width:100%;">
+    <span>© 2026 CaptureReady. All rights reserved.</span>
+    <span><a href="privacy.html">Privacy Policy</a> · <a href="mailto:berlintyler11@gmail.com">Contact</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

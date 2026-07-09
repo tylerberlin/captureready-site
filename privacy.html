@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — CaptureReady</title>
+<meta name="description" content="CaptureReady's privacy policy: what data the app uses, where it's stored, and who it's shared with.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M12 23C18.0751 23 23 18.0751 23 12C23 5.92487 18.0751 1 12 1C5.92487 1 1 5.92487 1 12C1 18.0751 5.92487 23 12 23ZM11.1662 17L13.4885 20.8706C15.9801 20.4555 18.1251 19.0162 19.4762 17H11.1662ZM6.87657 13.7379L11.2091 20.9589C8.47823 20.7209 6.09696 19.2624 4.61389 17.1319L6.87657 13.7379ZM7.63148 9H3.51936C3.18745 9.93827 3.00683 10.948 3.00683 12C3.00683 13.0929 3.20176 14.1402 3.55875 15.1091L7.63148 9ZM20.4806 15H16.3143L20.3393 8.62714C20.761 9.6687 20.9932 10.8072 20.9932 12C20.9932 13.052 20.8126 14.0617 20.4806 15ZM12.8338 7H4.52377C5.87486 4.9838 8.01991 3.54446 10.5115 3.12945L12.8338 7ZM12.7909 3.04113L17.0347 10.1141L19.2257 6.64495C17.7345 4.6361 15.4254 3.27066 12.7909 3.04113ZM8.17925 12L10.0542 9H13.9458L15.8208 12L13.9458 15H10.0542L8.17925 12Z' fill='%235c9ef6'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --navy-deep:#0a0e24;
+    --navy:#131a3d;
+    --purple:#2e2050;
+    --gold:#5c9ef6;
+    --gold-bright:#8fc2ff;
+    --amber:#598cfa;
+    --blue:#5c9ef6;
+    --cream:#f6f3ec;
+    --cream-dim:#c9c6d4;
+    --line:rgba(246,243,236,0.14);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 600px at 82% -8%, rgba(92,158,246,0.25), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 10% 20%, rgba(92,158,246,0.14), transparent 65%),
+      linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 45%, var(--purple) 100%);
+    background-attachment:fixed;
+    color:var(--cream);
+    font-family:"Plus Jakarta Sans", sans-serif;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--gold-bright);}
+  nav{
+    position:sticky; top:0; z-index:20;
+    backdrop-filter:blur(14px);
+    background:rgba(10,14,36,0.55);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{max-width:760px; margin:0 auto; padding:0 28px; display:flex; align-items:center; justify-content:space-between; height:72px;}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:700; font-size:1.05rem; text-decoration:none;}
+  .brand svg{width:26px; height:26px;}
+  nav a.back{font-size:0.9rem; font-weight:600; opacity:0.8; text-decoration:none;}
+  nav a.back:hover{opacity:1;}
+
+  .wrap{max-width:760px; margin:0 auto; padding:0 28px;}
+  main{padding:72px 0 100px;}
+  .eyebrow{
+    font-size:0.78rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--blue); margin-bottom:16px; display:block;
+  }
+  h1{
+    font-family:"Fraunces", serif; font-weight:500; font-size:clamp(2.2rem,5vw,3.2rem);
+    margin-bottom:14px; letter-spacing:-0.01em;
+  }
+  .updated{color:var(--cream-dim); font-size:0.92rem; margin-bottom:56px;}
+  h2{
+    font-family:"Fraunces", serif; font-weight:500; font-size:1.5rem;
+    margin:48px 0 16px; letter-spacing:-0.005em;
+    padding-top:12px; border-top:1px solid var(--line);
+  }
+  h2:first-of-type{border-top:none; padding-top:0; margin-top:0;}
+  p{color:var(--cream-dim); margin-bottom:14px; font-size:0.98rem;}
+  ul{margin:0 0 14px 22px; color:var(--cream-dim); font-size:0.98rem;}
+  li{margin-bottom:8px;}
+  strong{color:var(--cream); font-weight:700;}
+  table{width:100%; border-collapse:collapse; margin:20px 0 24px; font-size:0.92rem;}
+  th, td{text-align:left; padding:12px 14px; border-bottom:1px solid var(--line);}
+  th{color:var(--gold-bright); font-weight:700; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.06em;}
+  td{color:var(--cream-dim);}
+  .contact-box{
+    margin-top:56px; padding:36px; border-radius:20px;
+    background:linear-gradient(120deg, rgba(92,158,246,0.14), rgba(92,158,246,0.10));
+    border:1px solid var(--line);
+  }
+  .contact-box h3{font-family:"Fraunces", serif; font-weight:500; font-size:1.3rem; margin-bottom:8px;}
+  footer{
+    padding:36px 0 56px; border-top:1px solid var(--line);
+    text-align:center; font-size:0.86rem; color:var(--cream-dim);
+  }
+  ::selection{background:var(--gold-bright); color:#0b1330;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 23C18.0751 23 23 18.0751 23 12C23 5.92487 18.0751 1 12 1C5.92487 1 1 5.92487 1 12C1 18.0751 5.92487 23 12 23ZM11.1662 17L13.4885 20.8706C15.9801 20.4555 18.1251 19.0162 19.4762 17H11.1662ZM6.87657 13.7379L11.2091 20.9589C8.47823 20.7209 6.09696 19.2624 4.61389 17.1319L6.87657 13.7379ZM7.63148 9H3.51936C3.18745 9.93827 3.00683 10.948 3.00683 12C3.00683 13.0929 3.20176 14.1402 3.55875 15.1091L7.63148 9ZM20.4806 15H16.3143L20.3393 8.62714C20.761 9.6687 20.9932 10.8072 20.9932 12C20.9932 13.052 20.8126 14.0617 20.4806 15ZM12.8338 7H4.52377C5.87486 4.9838 8.01991 3.54446 10.5115 3.12945L12.8338 7ZM12.7909 3.04113L17.0347 10.1141L19.2257 6.64495C17.7345 4.6361 15.4254 3.27066 12.7909 3.04113ZM8.17925 12L10.0542 9H13.9458L15.8208 12L13.9458 15H10.0542L8.17925 12Z" fill="#5c9ef6"/></svg>
+      CaptureReady
+    </a>
+    <a class="back" href="index.html">← Back home</a>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+    <span class="eyebrow">Legal</span>
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated July 8, 2026</p>
+
+    <p>CaptureReady ("the app," "we," "us") is developed by Tyler Berlin. This policy explains what information CaptureReady uses, where it lives, and who — if anyone — it's shared with. In short: <strong>your data stays on your device.</strong> We don't run a backend server, we don't have user accounts, and we don't collect or sell your information.</p>
+
+    <h2>Information CaptureReady Uses</h2>
+    <p>CaptureReady uses the following on-device data to power its features. None of it is transmitted to us or to any server we operate.</p>
+    <table>
+      <tr><th>Data</th><th>Why it's used</th><th>Where it's stored</th></tr>
+      <tr><td>Location</td><td>Local weather, sun/moon times, golden &amp; blue hour, and tagging shoot locations on the map</td><td>On your device only</td></tr>
+      <tr><td>Photos you choose to attach</td><td>Journal entries and location pins you create</td><td>On your device only</td></tr>
+      <tr><td>Camera</td><td>Capturing reference photos for your shoot journal, if you choose to</td><td>On your device only</td></tr>
+      <tr><td>Gear, presets, shoots, journal entries</td><td>Core app functionality — saved settings, equipment, and notes</td><td>On your device only, via Apple's SwiftData framework</td></tr>
+    </table>
+    <p>You can deny location, camera, or photo library access at any time in iOS Settings → CaptureReady. Some features (like local weather or map tagging) won't work without location access, but the rest of the app functions normally.</p>
+
+    <h2>Third-Party Services</h2>
+    <p>CaptureReady uses the following third-party services strictly to fetch data the app displays to you:</p>
+    <ul>
+      <li><strong>Apple WeatherKit</strong> — provides live weather conditions for your location. Governed by <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>.</li>
+      <li><strong>Open-Meteo</strong> — a free, no-API-key weather service CaptureReady falls back to if WeatherKit is temporarily unavailable. See <a href="https://open-meteo.com/en/terms" target="_blank" rel="noopener">Open-Meteo's terms</a>.</li>
+      <li><strong>Apple Maps (MapKit)</strong> — powers location search and the Photography Map. Governed by Apple's Privacy Policy above.</li>
+    </ul>
+    <p>These requests include only the coordinates or search text needed to return a result (e.g., "what's the weather at this latitude/longitude"). No account, advertising, or analytics identifier is attached to these requests by CaptureReady.</p>
+
+    <h2>What We Don't Do</h2>
+    <ul>
+      <li>No user accounts, sign-in, or profile creation</li>
+      <li>No analytics SDKs, crash reporting services, or advertising networks</li>
+      <li>No selling, renting, or sharing your data with third parties for marketing</li>
+      <li>No cross-app or cross-site tracking of any kind</li>
+    </ul>
+
+    <h2>Data Retention &amp; Deletion</h2>
+    <p>Because everything is stored locally in the app's on-device database, deleting the app deletes your CaptureReady data along with it. If you back up your device via iCloud or iTunes/Finder, your CaptureReady data may be included in that backup, subject to Apple's backup encryption and your own iCloud settings.</p>
+
+    <h2>Children's Privacy</h2>
+    <p>CaptureReady is not directed at children under 13, and we do not knowingly collect information from children, consistent with the fact that we do not collect personal information from any user.</p>
+
+    <h2>Changes to This Policy</h2>
+    <p>If CaptureReady's data practices change — for example, if a future version adds an optional cloud sync or account feature — this page will be updated and the "Last updated" date above will change accordingly.</p>
+
+    <div class="contact-box">
+      <h3>Questions about this policy?</h3>
+      <p>Email us at <a href="mailto:berlintyler11@gmail.com">berlintyler11@gmail.com</a> and we'll get back to you.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  © 2026 CaptureReady. All rights reserved.
+</footer>
+
+</body>
+</html>
